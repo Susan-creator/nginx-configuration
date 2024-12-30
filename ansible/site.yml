@@ -1,0 +1,23 @@
+---
+- name: Configure nginx on master node (no nginx install here)
+  hosts: master
+  become: true
+  tasks:
+    # Any tasks for the master node can be placed here
+    # For example, tasks related to configuration, etc.
+    - name: Example task for master node
+      debug:
+        msg: "Master node configuration done, no NGINX installed."
+
+- name: Install NGINX on target nodes
+  hosts: target  # Only the worker nodes
+  become: true
+  tasks:
+    - name: Install NGINX
+      ansible.builtin.package:
+        name: nginx
+        state: present
+    - name: Start nginx
+      service:
+        name: nginx
+        state: started
